@@ -55,28 +55,24 @@
         }
         .project pre {
             background-color: #222;
-            color: white;
+            color: cyan;
             padding: 10px;
             border-radius: 5px;
             overflow-x: auto;
             font-family: Consolas, "Courier New", monospace;
         }
-        .project pre .keyword {
-            color: #569cd6;
-        }
-        .project pre .comment {
-            color: #6a9955;
-        }
-        .project pre .number {
-            color: #b5cea8;
-        }
         .secondary-sidebar {
-            width: 150px;
-            background-color: black;
+            width: 200px;
+            background-color: #222;
             height: 100vh;
             padding: 20px;
             box-sizing: border-box;
             border-left: 1px solid white;
+        }
+        .secondary-sidebar h2 {
+            color: white;
+            text-align: center;
+            margin-bottom: 20px;
         }
         .secondary-sidebar a {
             display: block;
@@ -91,6 +87,10 @@
         .secondary-sidebar a:hover {
             background-color: #444;
         }
+        .secondary-content {
+            padding: 20px;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -98,12 +98,34 @@
         <h2>Portfolio</h2>
         <a href="#">Projects</a>
     </div>
+    <div class="secondary-sidebar">
+        <h2>Maze Stack Game!</h2>
+        <a href="#game">Game</a>
+        <a href="#readme">Readme</a>
+        <a href="#code">Code</a>
+    </div>
     <div class="content">
-        <div class="main-content">
-            <h2>Projects</h2>
-            <div class="project">
-                <h3>Maze Stack Game!</h3>
-                <pre>
+        <div id="game" class="secondary-content" style="display: none;">
+            <h3>Game</h3>
+            <p>The game cannot be run directly in the browser. Please download the code and compile it locally to play the game.</p>
+        </div>
+        <div id="readme" class="secondary-content" style="display: none;">
+            <h3>Readme</h3>
+            <p>
+                <strong>Description:</strong> This is a C++ maze game where players navigate rooms, interact with doors, and find treasure.
+                <br>
+                <strong>Instructions:</strong>
+                <ol>
+                    <li>Move up and down with <code>w</code> and <code>s</code>.</li>
+                    <li>Enter doors with <code>x</code>.</li>
+                    <li>Grab treasure with <code>z</code>.</li>
+                </ol>
+                <p>The treasure is in Room 4!</p>
+            </p>
+        </div>
+        <div id="code" class="secondary-content" style="display: block;">
+            <h3>Code</h3>
+            <pre>
 #include &lt;iostream&gt;
 #include &lt;vector&gt;
 #include &lt;stack&gt;
@@ -142,7 +164,7 @@ void displayRoom() {
     }
     for (int i = roomTiles.size() - 1; i &gt;= 0; --i) {
         if (i == roomTiles.size() - 1 - currentPointer) {
-            cout &lt;&lt; ">";
+            cout &lt;&lt; "&gt;";
         } else {
             cout &lt;&lt; " ";
         }
@@ -229,15 +251,21 @@ int main() {
     gameLoop();
     return 0;
 }
-                </pre>
-            </div>
-        </div>
-        <div class="secondary-sidebar">
-            <h2>Options</h2>
-            <a href="#">Game</a>
-            <a href="#">Readme</a>
-            <a href="#">Code</a>
+            </pre>
         </div>
     </div>
+    <script>
+        // JavaScript to toggle between the content in the secondary sidebar
+        const tabs = document.querySelectorAll(".secondary-sidebar a");
+        const contents = document.querySelectorAll(".secondary-content");
+
+        tabs.forEach(tab => {
+            tab.addEventListener("click", event => {
+                event.preventDefault();
+                contents.forEach(content => content.style.display = "none");
+                document.querySelector(tab.getAttribute("href")).style.display = "block");
+            });
+        });
+    </script>
 </body>
 </html>
