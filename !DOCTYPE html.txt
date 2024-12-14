@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Engineering Portfolio</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: black;
+            color: white;
+        }
+        header {
+            background-color: #333;
+            padding: 10px;
+            text-align: center;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 10px 0;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .content {
+            padding: 20px;
+            text-align: center;
+        }
+        .project {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid white;
+            border-radius: 8px;
+        }
+        .project pre {
+            background-color: #222;
+            color: #0f0;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Engineering Portfolio</h1>
+    </header>
+    <nav>
+        <a href="#">Projects</a>
+    </nav>
+    <div class="content">
+        <h2>Projects</h2>
+        <div class="project">
+            <h3>Assembly Factorial Implementation</h3>
+            <pre>
+                ; ARM Assembly Code
+                ; Calculate factorial of a number
+                AREA FACTORIAL, CODE, READONLY
+                ENTRY
+
+                MOV R0, #5          ; Input: Factorial of 5
+                MOV R1, #1          ; Result initialized to 1
+
+            FACTORIAL_LOOP
+                CMP R0, #1          ; Compare R0 with 1
+                BLE DONE            ; If R0 <= 1, exit loop
+                MUL R1, R1, R0      ; Multiply R1 by R0
+                SUB R0, R0, #1      ; Decrement R0
+                B FACTORIAL_LOOP    ; Repeat loop
+
+            DONE
+                MOV R0, #0x18       ; Exit code
+                BX LR
+            END
+            </pre>
+        </div>
+    </div>
+</body>
+</html>
