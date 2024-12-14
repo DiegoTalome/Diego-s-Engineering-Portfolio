@@ -124,30 +124,31 @@
         <div id="readme" class="secondary-content" style="display: none;">
             <h3>Readme</h3>
             <p>
-                This C++ game demonstrates the use of stacks to manage a series of rooms, each containing elements like doors and treasures. Players navigate these rooms, interacting with the stack's top elements using `push` and `pop` operations to simulate actions like adding and removing items.
-            </p>
-            <p>
-                <strong>Stack Functionality:</strong>
-                The game employs the STL `stack` container to model room tiles. Key operations:
+                This C++ game recreates a maze, where the player's goal is to move through and in between rooms trying to find the treasure. The main two mechanisms are the use of the <code>#include &lt;stack&gt;</code> as the system to recreate rooms and the use of <code>push</code> and <code>pop</code> functions as the movement player mechanism, where it manipulates the elements of the room.
             </p>
             <ul>
-                <li><strong>`push`:</strong> Adds a tile (e.g., door or treasure) to the room stack.</li>
-                <li><strong>`pop`:</strong> Removes the top tile when a player interacts with it.</li>
+                <li><strong><code>push</code>:</strong> Adds a tile to the room stack.</li>
+                <li><strong><code>pop</code>:</strong> Removes the top tile when a player interacts with it.</li>
             </ul>
             <p>
-                <strong>Pointers:</strong>
-                Pointers in the game track the player's position within a room stack rather than directly manipulating memory addresses. This simplifies navigation logic while leveraging the STL stack's internal memory management.
+                One of the original ideas was to use address pointers as the player mechanism where it would point at some element (location) using the memory allocation stack (second original idea). The use of this two mechanisms increases the complexity exponentially.
             </p>
             <p>
-                <strong>Memory Implementation:</strong>
-                If manual memory management were used instead of STL stacks, the following would be required:
+                <strong>Pointers:</strong> Instead of pointing at the stack memory addresses directly, which would be the player itself, they point to the location of an element, being just the tracker instead.
             </p>
-            <ol>
-                <li>Dynamic allocation of stack nodes with `new`.</li>
-                <li>Explicit deallocation using `delete` to prevent memory leaks.</li>
-                <li>Custom logic for handling stack overflow and underflow conditions.</li>
-            </ol>
-            <p>This approach would provide finer control but increase complexity significantly.</p>
+            <p>
+                <strong>Memory Implementation:</strong> If the allocation memory stack was used, the following mechanism would be required at minimum:
+            </p>
+            <ul>
+                <li>Deallocation using <code>delete</code> to avoid memory leaks.</li>
+                <li>Logic to prevent stack overflow and underflow.</li>
+            </ul>
+            <p>
+                Using the simpler stack system also decreases the complexity to add more rooms, elements, or game mechanisms, such as enemies or items.
+            </p>
+            <p>
+                This simple version of the game is easy to modify and add features, which is my favorite part about it!
+            </p>
         </div>
         <div id="code" class="secondary-content" style="display: block;">
             <h3>Code</h3>
