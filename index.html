@@ -263,7 +263,8 @@ int main() {
             tab.addEventListener("click", event => {
                 event.preventDefault();
                 contents.forEach(content => content.style.display = "none");
-                document.querySelector(tab.getAttribute("href")).style.display = "block");
+                const target = document.querySelector(tab.getAttribute("href"));
+                if (target) target.style.display = "block";
             });
         });
     </script>
