@@ -10,29 +10,37 @@
             font-family: Arial, sans-serif;
             background-color: black;
             color: white;
-        }
-        header {
-            background-color: #333;
-            padding: 10px;
-            text-align: center;
-        }
-        nav {
             display: flex;
-            justify-content: center;
-            gap: 20px;
-            padding: 10px 0;
         }
-        nav a {
+        .sidebar {
+            width: 200px;
+            background-color: #222;
+            height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .sidebar h2 {
+            color: white;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .sidebar a {
+            display: block;
             color: white;
             text-decoration: none;
-            font-size: 18px;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            background-color: #333;
+            text-align: center;
         }
-        nav a:hover {
-            text-decoration: underline;
+        .sidebar a:hover {
+            background-color: #444;
         }
         .content {
+            flex: 1;
             padding: 20px;
-            text-align: center;
+            box-sizing: border-box;
         }
         .project {
             margin: 20px 0;
@@ -50,12 +58,10 @@
     </style>
 </head>
 <body>
-    <header>
-        <h1>Engineering Portfolio</h1>
-    </header>
-    <nav>
+    <div class="sidebar">
+        <h2>Portfolio</h2>
         <a href="#">Projects</a>
-    </nav>
+    </div>
     <div class="content">
         <h2>Projects</h2>
         <div class="project">
