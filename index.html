@@ -92,17 +92,16 @@
             padding: 20px;
             color: white;
         }
-        .secondary-content p {
-            color: lightgray;
+        .secondary-content p, .secondary-content li, .secondary-content ol {
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        .secondary-content h3 {
+            font-family: Arial, sans-serif;
+            color: #58a6ff;
         }
         .secondary-content pre {
             color: cyan;
-        }
-        .secondary-content code {
-            color: #f0a500;
-        }
-        .secondary-content strong {
-            color: #58a6ff;
         }
     </style>
 </head>
@@ -125,50 +124,45 @@
         <div id="readme" class="secondary-content" style="display: none;">
             <h3>Readme</h3>
             <p>
-                <strong>Description:</strong> This C++ game uses stacks to model rooms, allowing navigation between them, and incorporates basic object manipulation using <code>push</code> and <code>pop</code> operations.
+                This C++ game demonstrates the use of stacks to manage a series of rooms, each containing elements like doors and treasures. Players navigate these rooms, interacting with the stack's top elements using `push` and `pop` operations to simulate actions like adding and removing items.
             </p>
             <p>
-                <strong>Stack Functionality:</strong> 
-                <br>
-                The game uses the STL <code>stack</code> container to manage room tiles. Each room is represented as a stack where tiles are added (via <code>push</code>) and removed (via <code>pop</code>), mimicking the natural behavior of a stack data structure.
-                <ul>
-                    <li><code>push</code>: Adds a tile to the room stack, representing elements such as doors (<code>/</code>) or treasure (<code>*</code>).</li>
-                    <li><code>pop</code>: Removes the top tile to process room data dynamically.</li>
-                </ul>
+                <strong>Stack Functionality:</strong>
+                The game employs the STL `stack` container to model room tiles. Key operations:
             </p>
+            <ul>
+                <li><strong>`push`:</strong> Adds a tile (e.g., door or treasure) to the room stack.</li>
+                <li><strong>`pop`:</strong> Removes the top tile when a player interacts with it.</li>
+            </ul>
             <p>
                 <strong>Pointers:</strong>
-                <br>
-                Pointers are used in this game to navigate through the current room stack. Instead of managing memory directly, STL handles memory allocation internally for stack operations. 
-                <br>
-                While pointers do not directly manipulate addresses in this game, they track the player's position in the room stack, avoiding the complexities of direct memory address management.
+                Pointers in the game track the player's position within a room stack rather than directly manipulating memory addresses. This simplifies navigation logic while leveraging the STL stack's internal memory management.
             </p>
             <p>
                 <strong>Memory Implementation:</strong>
-                <br>
-                If a manual memory stack were implemented instead of using <code>#include &lt;stack&gt;</code>, you would need to:
-                <ol>
-                    <li>Allocate memory for each stack element dynamically.</li>
-                    <li>Manage memory explicitly using <code>new</code> and <code>delete</code> for each push and pop operation.</li>
-                    <li>Write additional logic to ensure stack overflow and underflow are managed safely.</li>
-                </ol>
-                This approach would increase complexity but allow finer control over memory usage.
+                If manual memory management were used instead of STL stacks, the following would be required:
             </p>
+            <ol>
+                <li>Dynamic allocation of stack nodes with `new`.</li>
+                <li>Explicit deallocation using `delete` to prevent memory leaks.</li>
+                <li>Custom logic for handling stack overflow and underflow conditions.</li>
+            </ol>
+            <p>This approach would provide finer control but increase complexity significantly.</p>
         </div>
         <div id="code" class="secondary-content" style="display: block;">
             <h3>Code</h3>
             <pre>
-#include &lt;iostream&gt;
-#include &lt;vector&gt;
-#include &lt;stack&gt;
-#include &lt;string&gt;
-#include &lt;algorithm&gt;
+#include <iostream>
+#include <vector>
+#include <stack>
+#include <string>
+#include <algorithm>
 
 using namespace std;
 
-typedef stack&lt;char&gt; Room;
+typedef stack<char> Room;
 
-vector&lt;Room&gt; rooms;  
+vector<Room> rooms;  
 int currentRoom = 0; 
 int currentPointer = 0;
 bool treasureGrabbed = false; 
@@ -186,7 +180,103 @@ void initializeRooms() {
     rooms.push_back(room4);
 }
 
-// More code here...
+void displayRoom() {
+    cout << "Room " << currentRoom + 1 << endl;
+    Room roomCopy = rooms[currentRoom]; 
+    vector<char> roomTiles;
+    while (!roomCopy.empty()) {
+        roomTiles.push_back(roomCopy.top());
+        roomCopy.pop();
+    }
+    for (int i = roomTiles.size() - 1; i >= 0; --i) {
+        if (i == roomTiles.size() - 1 - currentPointer) {
+            cout << ">";
+        } else {
+            cout << " ";
+        }
+        cout << roomTiles[i] << endl;
+    }
+    cout << "w to move up, s to move down, x to enter door, z to grab treasure, q to quit." << endl;
+}
+
+void moveUp() {
+    if (currentPointer < rooms[currentRoom].size() - 1) {
+        currentPointer++;
+    } else {
+        cout << "Can't move up, already at the bottom." << endl;
+    }
+}
+
+void moveDown() {
+    if (currentPointer > 0) {
+        currentPointer--;
+    } else {
+        cout << "Can't move down, already at the top." << endl;
+    }
+}
+
+void enterDoor() {
+    Room roomCopy = rooms[currentRoom]; 
+    vector<char> roomTiles;
+    while (!roomCopy.empty()) {
+        roomTiles.push_back(roomCopy.top());
+        roomCopy.pop();
+    }
+    char currentTile = roomTiles[roomTiles.size() - 1 - currentPointer];
+    if (currentTile == '/') {
+        cout << "Entering door" << endl;
+        currentRoom = (currentRoom + 1) % rooms.size();
+        currentPointer = 0;
+    } else {
+        cout << "You're not at a door" << endl;
+    }
+}
+
+void grabTreasure() {
+    Room roomCopy = rooms[currentRoom]; 
+    vector<char> roomTiles;
+    while (!roomCopy.empty()) {
+        roomTiles.push_back(roomCopy.top());
+        roomCopy.pop();
+    }
+    char currentTile = roomTiles[roomTiles.size() - 1 - currentPointer];
+    if (currentRoom == treasureRoom && currentTile == '*') {
+        cout << "You won the game!" << endl;
+        treasureGrabbed = true;
+        exit(0);
+    } else {
+        cout << "No treasure here." << endl;
+    }
+}
+
+void gameLoop() {
+    char input;
+    while (true) {
+        displayRoom();
+        cout << "Enter move: ";
+        cin >> input;
+        if (input == 'q') {
+            cout << "Exiting the game. Goodbye!" << endl;
+            break;
+        } else if (input == 's') {
+            moveUp();
+        } else if (input == 'w') {
+            moveDown();
+        } else if (input == 'x') {
+            enterDoor();
+        } else if (input == 'z') {
+            grabTreasure();
+        } else {
+            cout << "Invalid move." << endl;
+        }
+    }
+}
+
+int main() {
+    initializeRooms();
+    gameLoop();
+    return 0;
+}
             </pre>
         </div>
     </div>
