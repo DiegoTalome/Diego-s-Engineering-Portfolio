@@ -144,7 +144,7 @@
                 <li>Logic to prevent stack overflow and underflow.</li>
             </ul>
             <p>
-                Using the simpler stack system also decreases the complexity to add more rooms, elements, or game mechanisms, such as enemies or items.
+                Using the simpler stack system also decreases the complexity to add more rooms, elements, or game mechanisms, such as enemies or items. The treassure and door system can be also randomized to extra dificulties.
             </p>
             <p>
                 This simple version of the game is easy to modify and add features, which is my favorite part about it!
@@ -161,14 +161,15 @@
                 
                 using namespace std;
                 
-                typedef stack&lt;char&gt; Room;
+                typedef stack&lt;char&gt; Room; //Define elements of the rooms as characters.
                 
-                vector&lt;Room&gt; rooms;  
-                int currentRoom = 0; 
-                int currentPointer = 0;
-                bool treasureGrabbed = false; 
-                int treasureRoom = 3; 
+                vector&lt;Room&gt; rooms;  //Holds all rooms in a vector
+                int currentRoom = 0; //What room the player is in
+                int currentPointer = 0; //Room position of the player
+                bool treasureGrabbed = false; //Makes sure treasure is not grabbed
+                int treasureRoom = 3; //Where the treasure is in. 
                 
+                //Push room elements into the rooms "stacks"
                 void initializeRooms() {
                     Room room1, room2, room3, room4;
                     room1.push('-'); room1.push('/'); room1.push('-'); room1.push('-'); room1.push('-'); room1.push('-'); room1.push('-'); 
@@ -181,6 +182,7 @@
                     rooms.push_back(room4);
                 }
                 
+                //Function to display player location
                 void displayRoom() {
                     cout &lt;&lt; "Room " &lt;&lt; currentRoom + 1 &lt;&lt; endl;
                     Room roomCopy = rooms[currentRoom]; 
@@ -200,6 +202,7 @@
                     cout &lt;&lt; "w to move up, s to move down, x to enter door, z to grab treasure, q to quit." &lt;&lt; endl;
                 }
                 
+                //Movement system
                 void moveUp() {
                     if (currentPointer &lt; rooms[currentRoom].size() - 1) {
                         currentPointer++;
@@ -216,6 +219,7 @@
                     }
                 }
                 
+                //Moving in between rooms function
                 void enterDoor() {
                     Room roomCopy = rooms[currentRoom]; 
                     vector&lt;char&gt; roomTiles;
@@ -233,6 +237,7 @@
                     }
                 }
                 
+                //Winning Function
                 void grabTreasure() {
                     Room roomCopy = rooms[currentRoom]; 
                     vector&lt;char&gt; roomTiles;
@@ -250,6 +255,7 @@
                     }
                 }
                 
+                //User inputs mechanism
                 void gameLoop() {
                     char input;
                     while (true) {
