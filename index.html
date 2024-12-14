@@ -64,7 +64,8 @@
         .secondary-sidebar {
             width: 200px;
             background-color: #222;
-            height: 100vh;
+            height: auto;
+            min-height: 100vh;
             padding: 20px;
             box-sizing: border-box;
             border-left: 1px solid white;
@@ -91,6 +92,18 @@
             padding: 20px;
             color: white;
         }
+        .secondary-content p {
+            color: lightgray;
+        }
+        .secondary-content pre {
+            color: cyan;
+        }
+        .secondary-content code {
+            color: #f0a500;
+        }
+        .secondary-content strong {
+            color: #58a6ff;
+        }
     </style>
 </head>
 <body>
@@ -112,15 +125,34 @@
         <div id="readme" class="secondary-content" style="display: none;">
             <h3>Readme</h3>
             <p>
-                <strong>Description:</strong> This is a C++ maze game where players navigate rooms, interact with doors, and find treasure.
+                <strong>Description:</strong> This C++ game uses stacks to model rooms, allowing navigation between them, and incorporates basic object manipulation using <code>push</code> and <code>pop</code> operations.
+            </p>
+            <p>
+                <strong>Stack Functionality:</strong> 
                 <br>
-                <strong>Instructions:</strong>
+                The game uses the STL <code>stack</code> container to manage room tiles. Each room is represented as a stack where tiles are added (via <code>push</code>) and removed (via <code>pop</code>), mimicking the natural behavior of a stack data structure.
+                <ul>
+                    <li><code>push</code>: Adds a tile to the room stack, representing elements such as doors (<code>/</code>) or treasure (<code>*</code>).</li>
+                    <li><code>pop</code>: Removes the top tile to process room data dynamically.</li>
+                </ul>
+            </p>
+            <p>
+                <strong>Pointers:</strong>
+                <br>
+                Pointers are used in this game to navigate through the current room stack. Instead of managing memory directly, STL handles memory allocation internally for stack operations. 
+                <br>
+                While pointers do not directly manipulate addresses in this game, they track the player's position in the room stack, avoiding the complexities of direct memory address management.
+            </p>
+            <p>
+                <strong>Memory Implementation:</strong>
+                <br>
+                If a manual memory stack were implemented instead of using <code>#include &lt;stack&gt;</code>, you would need to:
                 <ol>
-                    <li>Move up and down with <code>w</code> and <code>s</code>.</li>
-                    <li>Enter doors with <code>x</code>.</li>
-                    <li>Grab treasure with <code>z</code>.</li>
+                    <li>Allocate memory for each stack element dynamically.</li>
+                    <li>Manage memory explicitly using <code>new</code> and <code>delete</code> for each push and pop operation.</li>
+                    <li>Write additional logic to ensure stack overflow and underflow are managed safely.</li>
                 </ol>
-                <p>The treasure is in Room 4!</p>
+                This approach would increase complexity but allow finer control over memory usage.
             </p>
         </div>
         <div id="code" class="secondary-content" style="display: block;">
@@ -154,103 +186,7 @@ void initializeRooms() {
     rooms.push_back(room4);
 }
 
-void displayRoom() {
-    cout &lt;&lt; "Room " &lt;&lt; currentRoom + 1 &lt;&lt; endl;
-    Room roomCopy = rooms[currentRoom]; 
-    vector&lt;char&gt; roomTiles;
-    while (!roomCopy.empty()) {
-        roomTiles.push_back(roomCopy.top());
-        roomCopy.pop();
-    }
-    for (int i = roomTiles.size() - 1; i &gt;= 0; --i) {
-        if (i == roomTiles.size() - 1 - currentPointer) {
-            cout &lt;&lt; "&gt;";
-        } else {
-            cout &lt;&lt; " ";
-        }
-        cout &lt;&lt; roomTiles[i] &lt;&lt; endl;
-    }
-    cout &lt;&lt; "w to move up, s to move down, x to enter door, z to grab treasure, q to quit." &lt;&lt; endl;
-}
-
-void moveUp() {
-    if (currentPointer &lt; rooms[currentRoom].size() - 1) {
-        currentPointer++;
-    } else {
-        cout &lt;&lt; "Cant move up already at the bottom" &lt;&lt; endl;
-    }
-}
-
-void moveDown() {
-    if (currentPointer &gt; 0) {
-        currentPointer--;
-    } else {
-        cout &lt;&lt; "Cant move down already at the top" &lt;&lt; endl;
-    }
-}
-
-void enterDoor() {
-    Room roomCopy = rooms[currentRoom]; 
-    vector&lt;char&gt; roomTiles;
-    while (!roomCopy.empty()) {
-        roomTiles.push_back(roomCopy.top());
-        roomCopy.pop();
-    }
-    char currentTile = roomTiles[roomTiles.size() - 1 - currentPointer];
-    if (currentTile == '/') {
-        cout &lt;&lt; "Entering door" &lt;&lt; endl;
-        currentRoom = (currentRoom + 1) % rooms.size();
-        currentPointer = 0;
-    } else {
-        cout &lt;&lt; "You're not at a door" &lt;&lt; endl;
-    }
-}
-
-void grabTreasure() {
-    Room roomCopy = rooms[currentRoom]; 
-    vector&lt;char&gt; roomTiles;
-    while (!roomCopy.empty()) {
-        roomTiles.push_back(roomCopy.top());
-        roomCopy.pop();
-    }
-    char currentTile = roomTiles[roomTiles.size() - 1 - currentPointer];
-    if (currentRoom == treasureRoom &amp;&amp; currentTile == '*') {
-        cout &lt;&lt; "You won the game!" &lt;&lt; endl;
-        treasureGrabbed = true;
-        exit(0);
-    } else {
-        cout &lt;&lt; "No treasure here" &lt;&lt; endl;
-    }
-}
-
-void gameLoop() {
-    char input;
-    while (true) {
-        displayRoom();
-        cout &lt;&lt; "Enter move ";
-        cin &gt;&gt; input;
-        if (input == 'q') {
-            cout &lt;&lt; "Exiting the game. Goodbye!" &lt;&lt; endl;
-            break;
-        } else if (input == 's') {
-            moveUp();
-        } else if (input == 'w') {
-            moveDown();
-        } else if (input == 'x') {
-            enterDoor();
-        } else if (input == 'z') {
-            grabTreasure();
-        } else {
-            cout &lt;&lt; "Invalid" &lt;&lt; endl;
-        }
-    }
-}
-
-int main() {
-    initializeRooms();
-    gameLoop();
-    return 0;
-}
+// More code here...
             </pre>
         </div>
     </div>
