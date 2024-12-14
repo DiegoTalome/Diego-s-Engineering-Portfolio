@@ -41,6 +41,11 @@
             flex: 1;
             padding: 20px;
             box-sizing: border-box;
+            display: flex;
+        }
+        .main-content {
+            flex: 1;
+            padding-left: 20px;
         }
         .project {
             margin: 20px 0;
@@ -50,10 +55,41 @@
         }
         .project pre {
             background-color: #222;
-            color: #0f0;
+            color: white;
             padding: 10px;
             border-radius: 5px;
             overflow-x: auto;
+            font-family: Consolas, "Courier New", monospace;
+        }
+        .project pre .keyword {
+            color: #569cd6;
+        }
+        .project pre .comment {
+            color: #6a9955;
+        }
+        .project pre .number {
+            color: #b5cea8;
+        }
+        .secondary-sidebar {
+            width: 150px;
+            background-color: black;
+            height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+            border-left: 1px solid white;
+        }
+        .secondary-sidebar a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            background-color: #333;
+            text-align: center;
+        }
+        .secondary-sidebar a:hover {
+            background-color: #444;
         }
     </style>
 </head>
@@ -63,192 +99,144 @@
         <a href="#">Projects</a>
     </div>
     <div class="content">
-        <h2>Projects</h2>
-        <div class="project">
-            <h3>Assembly Factorial Implementation</h3>
-            <pre>
-                
-                ; Maze Game!
-                MAZA GAME, CODE, READONLY
-                ENTRY
+        <div class="main-content">
+            <h2>Projects</h2>
+            <div class="project">
+                <h3>Maze Stack Game!</h3>
+                <pre>
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;stack&gt;
+#include &lt;string&gt;
+#include &lt;algorithm&gt;
 
-                #include <iostream>
-                    #include <vector>
-                    #include <stack>
-                    #include <string>
-                    #include <algorithm>
-                    
-                    using namespace std;
-                    
-                    
-                    typedef stack<char> Room;
-                    
-                    
-                    vector<Room> rooms;  
-                    int currentRoom = 0; 
-                    int currentPointer = 0;
-                    bool treasureGrabbed = false; 
-                    int treasureRoom = 3; 
-                    
-                    
-                    void initializeRooms() {
-                    
-                        Room room1, room2, room3, room4;
-                    
-                    
-                        room1.push('-'); room1.push('/'); room1.push('-'); room1.push('-'); room1.push('-'); room1.push('-'); room1.push('-'); 
-                    
-                    
-                    
-                        room2.push('-'); room2.push('-'); room2.push('/'); room2.push('-'); room2.push('-');
-                    
-                    
-                    
-                        room3.push('-'); room3.push('/'); room3.push('-'); room3.push('-'); room3.push('-');
-                    
-                    
-                    
-                        room4.push('-'); room4.push('-'); room4.push('*'); room4.push('-'); room4.push('-');
-                    
-                    
-                        rooms.push_back(room1);
-                        rooms.push_back(room2);
-                        rooms.push_back(room3);
-                        rooms.push_back(room4);
-                    }
-                    
-                    
-                    void displayRoom() {
-                        cout << "Room " << currentRoom + 1 << endl;
-                    
-                        Room roomCopy = rooms[currentRoom]; 
-                        vector<char> roomTiles;
-                    
-                        while (!roomCopy.empty()) {
-                            roomTiles.push_back(roomCopy.top());
-                            roomCopy.pop();
-                        }
-                    
-                        for (int i = roomTiles.size() - 1; i >= 0; --i) {
-                            if (i == roomTiles.size() - 1 - currentPointer) {
-                                cout << ">";
-                    
-                    
-                            } else {
-                                cout << " ";
-                            }
-                            
-                            cout << roomTiles[i] << endl;
-                        }
-                    
-                        cout << "w to move up, s to move down, x to enter door, z to grab treasure, q to quit." << endl;
-                    
-                    }
-                    
-                    
-                    void moveUp() {
-                        if (currentPointer < rooms[currentRoom].size() - 1) {
-                            currentPointer++;
-                    
-                        } else {
-                            cout << "Cant move up already at the bottom" << endl;
-                        }
-                    }
-                    
-                    void moveDown() {
-                        if (currentPointer > 0) {
-                            currentPointer--;
-                    
-                        } else {
-                            cout << "Cant move down already at the top" << endl;
-                        }
-                    }
-                    
-                    
-                    void enterDoor() {
-                        Room roomCopy = rooms[currentRoom]; 
-                        vector<char> roomTiles;
-                    
-                        while (!roomCopy.empty()) {
-                            roomTiles.push_back(roomCopy.top());
-                            roomCopy.pop();
-                        }
-                    
-                        char currentTile = roomTiles[roomTiles.size() - 1 - currentPointer];
-                    
-                        if (currentTile == '/') {
-                            cout << "Entering door" << endl;
-                            currentRoom = (currentRoom + 1) % rooms.size();
-                            currentPointer = 0;
-                    
-                        } else {
-                            cout << "You're not at a door" << endl;
-                        }
-                    }
-                    
-                    
-                    void grabTreasure() {
-                    
-                        Room roomCopy = rooms[currentRoom]; 
-                        vector<char> roomTiles;
-                    
-                        while (!roomCopy.empty()) {
-                            roomTiles.push_back(roomCopy.top());
-                            roomCopy.pop();
-                        }
-                    
-                        char currentTile = roomTiles[roomTiles.size() - 1 - currentPointer];
-                    
-                        if (currentRoom == treasureRoom && currentTile == '*') {
-                    
-                            cout << "You won the game!" << endl;
-                    
-                            treasureGrabbed = true;
-                            exit(0);
-                    
-                        } else {
-                            cout << "No treasure here" << endl;
-                        }
-                    }
-                    
-                    
-                    void gameLoop() {
-                        char input;
-                        while (true) {
-                    
-                    
-                            displayRoom();
-                    
-                            cout << "Enter move ";
-                            cin >> input;
-                    
-                    
-                            if (input == 'q') {
-                                cout << "Exiting the game. Goodbye!" << endl;
-                                break;
-                            } else if (input == 's') {
-                                moveUp();
-                            } else if (input == 'w') {
-                                moveDown();
-                            } else if (input == 'x') {
-                                enterDoor();
-                            } else if (input == 'z') {
-                                grabTreasure();
-                            } else {
-                                cout << "Invalid" << endl;
-                            }
-                        }
-                    
-                    }
-                    
-                    
-                    int main() {
-                        initializeRooms();
-                        gameLoop();
-                        return 0;
-                    }
-                    
-            </pre>
+using namespace std;
+
+typedef stack&lt;char&gt; Room;
+
+vector&lt;Room&gt; rooms;  
+int currentRoom = 0; 
+int currentPointer = 0;
+bool treasureGrabbed = false; 
+int treasureRoom = 3; 
+
+void initializeRooms() {
+    Room room1, room2, room3, room4;
+    room1.push('-'); room1.push('/'); room1.push('-'); room1.push('-'); room1.push('-'); room1.push('-'); room1.push('-'); 
+    room2.push('-'); room2.push('-'); room2.push('/'); room2.push('-'); room2.push('-');
+    room3.push('-'); room3.push('/'); room3.push('-'); room3.push('-'); room3.push('-');
+    room4.push('-'); room4.push('-'); room4.push('*'); room4.push('-'); room4.push('-');
+    rooms.push_back(room1);
+    rooms.push_back(room2);
+    rooms.push_back(room3);
+    rooms.push_back(room4);
+}
+
+void displayRoom() {
+    cout &lt;&lt; "Room " &lt;&lt; currentRoom + 1 &lt;&lt; endl;
+    Room roomCopy = rooms[currentRoom]; 
+    vector&lt;char&gt; roomTiles;
+    while (!roomCopy.empty()) {
+        roomTiles.push_back(roomCopy.top());
+        roomCopy.pop();
+    }
+    for (int i = roomTiles.size() - 1; i &gt;= 0; --i) {
+        if (i == roomTiles.size() - 1 - currentPointer) {
+            cout &lt;&lt; ">";
+        } else {
+            cout &lt;&lt; " ";
+        }
+        cout &lt;&lt; roomTiles[i] &lt;&lt; endl;
+    }
+    cout &lt;&lt; "w to move up, s to move down, x to enter door, z to grab treasure, q to quit." &lt;&lt; endl;
+}
+
+void moveUp() {
+    if (currentPointer &lt; rooms[currentRoom].size() - 1) {
+        currentPointer++;
+    } else {
+        cout &lt;&lt; "Cant move up already at the bottom" &lt;&lt; endl;
+    }
+}
+
+void moveDown() {
+    if (currentPointer &gt; 0) {
+        currentPointer--;
+    } else {
+        cout &lt;&lt; "Cant move down already at the top" &lt;&lt; endl;
+    }
+}
+
+void enterDoor() {
+    Room roomCopy = rooms[currentRoom]; 
+    vector&lt;char&gt; roomTiles;
+    while (!roomCopy.empty()) {
+        roomTiles.push_back(roomCopy.top());
+        roomCopy.pop();
+    }
+    char currentTile = roomTiles[roomTiles.size() - 1 - currentPointer];
+    if (currentTile == '/') {
+        cout &lt;&lt; "Entering door" &lt;&lt; endl;
+        currentRoom = (currentRoom + 1) % rooms.size();
+        currentPointer = 0;
+    } else {
+        cout &lt;&lt; "You're not at a door" &lt;&lt; endl;
+    }
+}
+
+void grabTreasure() {
+    Room roomCopy = rooms[currentRoom]; 
+    vector&lt;char&gt; roomTiles;
+    while (!roomCopy.empty()) {
+        roomTiles.push_back(roomCopy.top());
+        roomCopy.pop();
+    }
+    char currentTile = roomTiles[roomTiles.size() - 1 - currentPointer];
+    if (currentRoom == treasureRoom &amp;&amp; currentTile == '*') {
+        cout &lt;&lt; "You won the game!" &lt;&lt; endl;
+        treasureGrabbed = true;
+        exit(0);
+    } else {
+        cout &lt;&lt; "No treasure here" &lt;&lt; endl;
+    }
+}
+
+void gameLoop() {
+    char input;
+    while (true) {
+        displayRoom();
+        cout &lt;&lt; "Enter move ";
+        cin &gt;&gt; input;
+        if (input == 'q') {
+            cout &lt;&lt; "Exiting the game. Goodbye!" &lt;&lt; endl;
+            break;
+        } else if (input == 's') {
+            moveUp();
+        } else if (input == 'w') {
+            moveDown();
+        } else if (input == 'x') {
+            enterDoor();
+        } else if (input == 'z') {
+            grabTreasure();
+        } else {
+            cout &lt;&lt; "Invalid" &lt;&lt; endl;
+        }
+    }
+}
+
+int main() {
+    initializeRooms();
+    gameLoop();
+    return 0;
+}
+                </pre>
+            </div>
+        </div>
+        <div class="secondary-sidebar">
+            <h2>Options</h2>
+            <a href="#">Game</a>
+            <a href="#">Readme</a>
+            <a href="#">Code</a>
         </div>
     </div>
 </body>
