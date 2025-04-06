@@ -1,305 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Engineering Portfolio</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: black;
-            color: white;
-            display: flex;
-        }
-        .sidebar {
-            width: 200px;
-            background-color: black;
-            height: 100vh;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-        .sidebar h2 {
-            color: white;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .sidebar a {
-            display: block;
-            color: white;
-            text-decoration: none;
-            padding: 10px;
-            margin: 5px 0;
-            border-radius: 5px;
-            background-color: #333;
-            text-align: center;
-        }
-        .sidebar a:hover {
-            background-color: #444;
-        }
-        .content {
-            flex: 1;
-            padding: 20px;
-            box-sizing: border-box;
-            display: flex;
-        }
-        .main-content {
-            flex: 1;
-            padding-left: 20px;
-        }
-        .project {
-            margin: 20px 0;
-            padding: 15px;
-            border: 1px solid white;
-            border-radius: 8px;
-        }
-        .project pre {
-            background-color: #222;
-            color: cyan;
-            padding: 10px;
-            border-radius: 5px;
-            overflow-x: auto;
-            font-family: Consolas, "Courier New", monospace;
-        }
-        .secondary-sidebar {
-            width: 200px;
-            background-color: #222;
-            height: auto;
-            min-height: 100vh;
-            padding: 20px;
-            box-sizing: border-box;
-            border-left: 1px solid white;
-        }
-        .secondary-sidebar h2 {
-            color: white;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .secondary-sidebar a {
-            display: block;
-            color: white;
-            text-decoration: none;
-            padding: 10px;
-            margin: 5px 0;
-            border-radius: 5px;
-            background-color: #333;
-            text-align: center;
-        }
-        .secondary-sidebar a:hover {
-            background-color: #444;
-        }
-        .secondary-content {
-            padding: 20px;
-            color: white;
-        }
-        .secondary-content p, .secondary-content li, .secondary-content ol {
-            color: white;
-            font-family: Arial, sans-serif;
-        }
-        .secondary-content h3 {
-            font-family: Arial, sans-serif;
-            color: #58a6ff;
-        }
-        .secondary-content pre {
-            color: cyan;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Engineering Portfolio</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: black;
+      color: white;
+      display: flex;
+    }
+    .sidebar {
+      width: 200px;
+      background-color: black;
+      height: 100vh;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    .sidebar h2 {
+      color: white;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .sidebar a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 5px;
+      background-color: #333;
+      text-align: center;
+    }
+    .sidebar a:hover {
+      background-color: #444;
+    }
+    .content {
+      flex: 1;
+      padding: 20px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+    }
+    .main-content {
+      display: none;
+    }
+    .main-content.active {
+      display: block;
+    }
+    .secondary-content {
+      padding: 20px;
+    }
+    .secondary-content img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+    h3 {
+      color: #58a6ff;
+    }
+  </style>
 </head>
 <body>
-    <div class="sidebar">
-        <h2>Portfolio</h2>
-        <a href="#">Projects</a>
-    </div>
-    <div class="secondary-sidebar">
-        <h2>Maze Stack Game!</h2>
-        <a href="#game">Game</a>
-        <a href="#readme">Readme</a>
-        <a href="#code">Code</a>
-    </div>
-    <div class="content">
-        <div id="game" class="secondary-content" style="display: none;">
-            <h3>Game</h3>
-            <p>The game cannot be run directly in the browser. Please download the code and compile it locally to play the game.</p>
-        </div>
-        <div id="readme" class="secondary-content" style="display: none;">
-            <h3>Readme</h3>
-            <p>
-                This C++ game recreates a maze, where the player's goal is to move through and in between rooms trying to find the treasure. The main two mechanisms are the use of the <code>#include &lt;stack&gt;</code> as the system to recreate rooms and the use of <code>push</code> and <code>pop</code> functions as the movement player mechanism, where it manipulates the elements of the room.
-            </p>
-            <ul>
-                <li><strong><code>push</code>:</strong> Adds a tile to the room stack.</li>
-                <li><strong><code>pop</code>:</strong> Removes the top tile when a player interacts with it.</li>
-            </ul>
-            <p>
-                One of the original ideas was to use address pointers as the player mechanism where it would point at some element (location) using the memory allocation stack (second original idea). The use of this two mechanisms increases the complexity exponentially.
-            </p>
-            <p>
-                <strong>Pointers:</strong> Instead of pointing at the stack memory addresses directly, which would be the player itself, they point to the location of an element, being just the tracker instead.
-            </p>
-            <p>
-                <strong>Memory Implementation:</strong> If the allocation memory stack was used, the following mechanism would be required at minimum:
-            </p>
-            <ul>
-                <li>Deallocation using <code>delete</code> to avoid memory leaks.</li>
-                <li>Logic to prevent stack overflow and underflow.</li>
-            </ul>
-            <p>
-                Using the simpler stack system also decreases the complexity to add more rooms, elements, or game mechanisms, such as enemies or items. The treasure and door system can be also randomized to extra dificulties.
-            </p>
-            <p>
-                This simple version of the game is easy to modify and add features, which is my favorite part about it!
-            </p>
-        </div>
-        <div id="code" class="secondary-content" style="display: block;">
-            <h3>Code</h3>
-            <pre>
-                #include &lt;iostream&gt;
-                #include &lt;vector&gt;
-                #include &lt;stack&gt;
-                #include &lt;string&gt;
-                #include &lt;algorithm&gt;
-                
-                using namespace std;
-                
-                typedef stack&lt;char&gt; Room; //Define elements of the rooms as characters.
-                
-                vector&lt;Room&gt; rooms;  //Holds all rooms in a vector
-                int currentRoom = 0; //What room the player is in
-                int currentPointer = 0; //Room position of the player
-                bool treasureGrabbed = false; //Makes sure treasure is not grabbed
-                int treasureRoom = 3; //Where the treasure is in. 
-                
-                //Push room elements into the rooms "stacks"
-                void initializeRooms() {
-                    Room room1, room2, room3, room4;
-                    room1.push('-'); room1.push('/'); room1.push('-'); room1.push('-'); room1.push('-'); room1.push('-'); room1.push('-'); 
-                    room2.push('-'); room2.push('-'); room2.push('/'); room2.push('-'); room2.push('-');
-                    room3.push('-'); room3.push('/'); room3.push('-'); room3.push('-'); room3.push('-');
-                    room4.push('-'); room4.push('-'); room4.push('*'); room4.push('-'); room4.push('-');
-                    rooms.push_back(room1);
-                    rooms.push_back(room2);
-                    rooms.push_back(room3);
-                    rooms.push_back(room4);
-                }
-                
-                //Function to display player location
-                void displayRoom() {
-                    cout &lt;&lt; "Room " &lt;&lt; currentRoom + 1 &lt;&lt; endl;
-                    Room roomCopy = rooms[currentRoom]; 
-                    vector&lt;char&gt; roomTiles;
-                    while (!roomCopy.empty()) {
-                        roomTiles.push_back(roomCopy.top());
-                        roomCopy.pop();
-                    }
-                    for (int i = roomTiles.size() - 1; i &gt;= 0; --i) {
-                        if (i == roomTiles.size() - 1 - currentPointer) {
-                            cout &lt;&lt; "&gt;";
-                        } else {
-                            cout &lt;&lt; " ";
-                        }
-                        cout &lt;&lt; roomTiles[i] &lt;&lt; endl;
-                    }
-                    cout &lt;&lt; "w to move up, s to move down, x to enter door, z to grab treasure, q to quit." &lt;&lt; endl;
-                }
-                
-                //Movement system
-                void moveUp() {
-                    if (currentPointer &lt; rooms[currentRoom].size() - 1) {
-                        currentPointer++;
-                    } else {
-                        cout &lt;&lt; "Can't move up, already at the bottom." &lt;&lt; endl;
-                    }
-                }
-                
-                void moveDown() {
-                    if (currentPointer &gt; 0) {
-                        currentPointer--;
-                    } else {
-                        cout &lt;&lt; "Can't move down, already at the top." &lt;&lt; endl;
-                    }
-                }
-                
-                //Moving in between rooms function
-                void enterDoor() {
-                    Room roomCopy = rooms[currentRoom]; 
-                    vector&lt;char&gt; roomTiles;
-                    while (!roomCopy.empty()) {
-                        roomTiles.push_back(roomCopy.top());
-                        roomCopy.pop();
-                    }
-                    char currentTile = roomTiles[roomTiles.size() - 1 - currentPointer];
-                    if (currentTile == '/') {
-                        cout &lt;&lt; "Entering door" &lt;&lt; endl;
-                        currentRoom = (currentRoom + 1) % rooms.size();
-                        currentPointer = 0;
-                    } else {
-                        cout &lt;&lt; "You're not at a door" &lt;&lt; endl;
-                    }
-                }
-                
-                //Winning Function
-                void grabTreasure() {
-                    Room roomCopy = rooms[currentRoom]; 
-                    vector&lt;char&gt; roomTiles;
-                    while (!roomCopy.empty()) {
-                        roomTiles.push_back(roomCopy.top());
-                        roomCopy.pop();
-                    }
-                    char currentTile = roomTiles[roomTiles.size() - 1 - currentPointer];
-                    if (currentRoom == treasureRoom && currentTile == '*') {
-                        cout &lt;&lt; "You won the game!" &lt;&lt; endl;
-                        treasureGrabbed = true;
-                        exit(0);
-                    } else {
-                        cout &lt;&lt; "No treasure here." &lt;&lt; endl;
-                    }
-                }
-                
-                //User inputs mechanism
-                void gameLoop() {
-                    char input;
-                    while (true) {
-                        displayRoom();
-                        cout &lt;&lt; "Enter move: ";
-                        cin &gt;&gt; input;
-                        if (input == 'q') {
-                            cout &lt;&lt; "Exiting the game. Goodbye!" &lt;&lt; endl;
-                            break;
-                        } else if (input == 's') {
-                            moveUp();
-                        } else if (input == 'w') {
-                            moveDown();
-                        } else if (input == 'x') {
-                            enterDoor();
-                        } else if (input == 'z') {
-                            grabTreasure();
-                        } else {
-                            cout &lt;&lt; "Invalid move." &lt;&lt; endl;
-                        }
-                    }
-                }
-                
-                int main() {
-                    initializeRooms();
-                    gameLoop();
-                    return 0;
-                }
-            </pre>
-        </div>
-    </div>
-    <script>
-        // JavaScript to toggle between the content in the secondary sidebar
-        const tabs = document.querySelectorAll(".secondary-sidebar a");
-        const contents = document.querySelectorAll(".secondary-content");
+  <div class="sidebar">
+    <h2>Portfolio</h2>
+    <a href="#maze" onclick="showProject('maze')">Maze Stack Game!</a>
+    <a href="#project2" onclick="showProject('project2')">VHDL Computer Design</a>
+    <a href="#project3" onclick="showProject('project3')">Three Stage Amplifier</a>
+  </div>
 
-        tabs.forEach(tab => {
-            tab.addEventListener("click", event => {
-                event.preventDefault();
-                contents.forEach(content => content.style.display = "none");
-                const target = document.querySelector(tab.getAttribute("href"));
-                if (target) target.style.display = "block";
-            });
-        });
-    </script>
+  <div class="content">
+    <div id="maze" class="main-content active">
+      <div class="secondary-content">
+        <h3>Maze Stack Game!</h3>
+        <p>This C++ game recreates a maze, where the player moves through rooms to find treasure using stacks.</p>
+        <img src="images/maze_diagram.png" alt="Maze Game Diagram">
+      </div>
+    </div>
+
+    <div id="project2" class="main-content">
+      <div class="secondary-content">
+        <h3>VHDL Computer Design</h3>
+        <p>This project uses VHDL to design a simple computer architecture implemented on an FPGA board.</p>
+        <img src="images/vhdl_computer.jpg" alt="VHDL Computer Design">
+
+        <h4 style="color:#58a6ff;">Register File</h4>
+        <p>The register file consists of multiple 8-bit registers with write and dual-read capability. It uses a write-enable control line, and multiplexers select which register's data is placed on the output buses. Address inputs determine which register is read or written to.</p>
+
+        <h4 style="color:#58a6ff;">ALU (Arithmetic Logic Unit)</h4>
+        <p>The ALU supports operations such as ADD, SUB, AND, OR, and XOR on 8-bit operands. Flags such as Zero and Carry are calculated as outputs. It forms the computational heart of the processor and operates based on a 3-bit opcode input.</p>
+      </div>
+    </div>
+
+    <div id="project3" class="main-content">
+      <div class="secondary-content">
+        <h3>Three Stage Amplifier</h3>
+        <p>A multi-stage analog amplifier built to demonstrate gain, bandwidth, and signal fidelity across each stage.</p>
+        <img src="images/three_stage_amp.jpg" alt="Three Stage Amplifier Circuit">
+
+        <h4 style="color:#58a6ff;">Design Overview</h4>
+        <p>This amplifier consists of three sequential gain stages: a common-emitter amplifier for initial voltage gain, a second common-emitter stage for increased amplification, and an emitter follower (buffer) stage to provide current drive capability with minimal output impedance. Each stage is carefully biased to operate in the active region, and coupling capacitors are used to block DC while allowing signal transfer.</p>
+
+        <h4 style="color:#58a6ff;">Performance</h4>
+        <p>The amplifier was tested with a 1 kHz sinusoidal input signal. The first two stages provide the bulk of the gain, while the final stage maintains signal integrity when driving a load. Total gain achieved was approximately 7.1 V/V, with stable operation and minimal distortion across the frequency range of interest.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showProject(id) {
+      const sections = document.querySelectorAll('.main-content');
+      sections.forEach(section => section.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+  </script>
 </body>
 </html>
