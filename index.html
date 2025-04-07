@@ -102,9 +102,13 @@
   </div>
 
   <div class="content">
-    <div id="regfile" class="main-content active">
+    <div id=\"regfile\" class=\"main-content active\">
       <div class="secondary-content">
         <h3>Register File</h3>
+<p>A register file is a small, fast memory unit within a CPU that stores temporary data needed during instruction execution. Unlike RAM, which holds large amounts of data, the register file offers quick access to values needed for arithmetic, logic, and data movement operations. It is essential for CPU performance, allowing fast data retrieval without accessing slower main memory.
+</p>
+
+<p>Each individual register inside the register file is a fixed-width storage element, often 8, 16, or 32 bits wide, depending on the architecture. A typical register is built using a chain of D flip-flops, one for each bit. These flip-flops are synchronized by a clock signal and controlled by enable and reset lines. When enabled, the flip-flops capture and hold data until the next update cycle, functioning as the basic building blocks of processor state.</p>
         <p>This module stores and routes data between CPU components. It contains 16 registers with dual read and single write capabilities. Below are the different components used to construct the register file.</p>
 
         <h4 style="color:#58a6ff;">1. Basic 4-to-1 MUX Logic Cell</h4>
