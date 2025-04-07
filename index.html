@@ -72,7 +72,7 @@
     <a onclick="toggleMipsMenu()">16-BIT MIPS Design</a>
   </div>
 
-  <div class="mips-submenu" id="mipsMenu" style="display: block;">
+  <div class=\"mips-submenu\" id=\"mipsMenu\" style=\"display: none;\">
     <h3>16-BIT MIPS Design</h3>
     <a href="register_file.html">Register File</a>
     <a href="alu.html">ALU Design</a>
@@ -80,7 +80,8 @@
 
   <script>
     function toggleMipsMenu() {
-  // Always visible, toggle disabled
+  const menu = document.getElementById('mipsMenu');
+  menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
 }
   </script>
 </body>
