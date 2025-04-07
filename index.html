@@ -58,6 +58,30 @@
       border-radius: 8px;
       margin-top: 10px;
     }
+    .mips-submenu {
+      background-color: #111;
+      padding: 10px;
+      border-left: 1px solid white;
+      min-height: 100vh;
+    }
+    .mips-submenu h3 {
+      text-align: center;
+      color: #58a6ff;
+      margin-top: 0;
+    }
+    .mips-submenu a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      padding: 10px;
+      margin: 5px 0;
+      background-color: #222;
+      border-radius: 5px;
+      text-align: center;
+    }
+    .mips-submenu a:hover {
+      background-color: #333;
+    }
     h3 {
       color: #58a6ff;
     }
@@ -71,42 +95,41 @@
     <a href="#project3" onclick="showProject('project3')">Three Stage Amplifier</a>
   </div>
 
+  <div class="mips-submenu">
+    <h3>16-BIT MIPS Design</h3>
+    <a href="#regfile" onclick="showProject('regfile')">Register File</a>
+    <a href="#alu" onclick="showProject('alu')">ALU Design</a>
+  </div>
+
   <div class="content">
-    <div id="maze" class="main-content active">
+    <div id="regfile" class="main-content active">
       <div class="secondary-content">
-        <h3>Maze Stack Game!</h3>
-        <p>This C++ game recreates a maze, where the player moves through rooms to find treasure using stacks.</p>
-        <img src="images/maze_diagram.png" alt="Maze Game Diagram">
-      </div>
-    </div>
+        <h3>Register File</h3>
+        <p>This module stores and routes data between CPU components. It contains 16 registers with dual read and single write capabilities. Below are the different components used to construct the register file.</p>
 
-    <div id="project2" class="main-content">
-      <div class="secondary-content">
-        <h3>VHDL Computer Design</h3>
-        <p>This project uses VHDL to design a simple computer architecture implemented on an FPGA board.</p>
-        <img src="images/vhdl_computer.jpg" alt="VHDL Computer Design">
+        <h4 style="color:#58a6ff;">1. Basic 4-to-1 MUX Logic Cell</h4>
+        <img src="images/mux4.png" alt="4-to-1 MUX Logic">
+        <p>This is the logic cell that forms the core of the multiplexer system. Each one takes in 4 data lines and routes one to the output based on the control signals.</p>
 
-        <h4 style="color:#58a6ff;">Register File</h4>
-        <p>The register file consists of multiple 8-bit registers with write and dual-read capability. It uses a write-enable control line, and multiplexers select which register's data is placed on the output buses. Address inputs determine which register is read or written to.</p>
-        <img src="images/RLTVIEWER-REGFILE.png" alt="Register File Schematic">
+        <h4 style="color:#58a6ff;">2. MUX 16x4 Grid</h4>
+        <img src="images/MUX16.png" alt="MUX Grid">
+        <p>Here we scale the individual MUX logic into a 16x4 grid to enable selection between 16 registers. Each row corresponds to a bit across the register set.</p>
 
-        <h4 style="color:#58a6ff;">ALU (Arithmetic Logic Unit)</h4>
-        <p>The ALU supports operations such as ADD, SUB, AND, OR, and XOR on 8-bit operands. Flags such as Zero and Carry are calculated as outputs. It forms the computational heart of the processor and operates based on a 3-bit opcode input.</p>
-        <img src="images/WAVEFORM.png" alt="ALU Waveform Simulation">
-      </div>
-    </div>
+        <h4 style="color:#58a6ff;">3. Resource Properties</h4>
+        <img src="images/resource prop.png" alt="Resource Properties">
+        <p>This schematic gives insight into how the FPGA compiler maps the logic to hardware resources. It reveals usage of LUTs, flip-flops, and routing complexity.</p>
 
-    <div id="project3" class="main-content">
-      <div class="secondary-content">
-        <h3>Three Stage Amplifier</h3>
-        <p>A multi-stage analog amplifier built to demonstrate gain, bandwidth, and signal fidelity across each stage.</p>
-        <img src="images/three_stage_amp.jpg" alt="Three Stage Amplifier Circuit">
+        <h4 style="color:#58a6ff;">4. Register Cell Structure</h4>
+        <img src="images/RG8.png" alt="8-bit Register Block">
+        <p>This image shows how each register stores 8 bits using flip-flops and how they are controlled by clock, reset, and enable signals. This structure is replicated 16 times.</p>
 
-        <h4 style="color:#58a6ff;">Design Overview</h4>
-        <p>This amplifier consists of three sequential gain stages: a common-emitter amplifier for initial voltage gain, a second common-emitter stage for increased amplification, and an emitter follower (buffer) stage to provide current drive capability with minimal output impedance. Each stage is carefully biased to operate in the active region, and coupling capacitors are used to block DC while allowing signal transfer.</p>
+        <h4 style="color:#58a6ff;">5. Full Register File Integration</h4>
+        <img src="images/RLTVIEWER-REGFILE.png" alt="Register File Full">
+        <p>This is the complete top-level schematic of the register file. It includes the decoder, write logic, 16 registers, and two read ports using MUXes for dual access.</p>
 
-        <h4 style="color:#58a6ff;">Performance</h4>
-        <p>The amplifier was tested with a 1 kHz sinusoidal input signal. The first two stages provide the bulk of the gain, while the final stage maintains signal integrity when driving a load. Total gain achieved was approximately 7.1 V/V, with stable operation and minimal distortion across the frequency range of interest.</p>
+        <h4 style="color:#58a6ff;">6. Register File Simulation</h4>
+        <img src="images/WAVEFORM.png" alt="Register File Waveform">
+        <p>This waveform confirms correct operation. It shows the clock, control signals, register addresses, and outputs. Note how data is written and read across simulation time.</p>
       </div>
     </div>
   </div>
