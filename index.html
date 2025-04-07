@@ -65,14 +65,14 @@
   </style>
 </head>
 <body>
-  <div class="sidebar">
+  <div class="sidebar" style="display: block;">
     <h2>Portfolio</h2>
     <a href="maze.html">Maze Stack Game</a>
     <a href="amplifier.html">Three Stage Amplifier</a>
     <a onclick="toggleMipsMenu()">16-BIT MIPS Design</a>
   </div>
 
-  <div class="mips-submenu" id="mipsMenu">
+  <div class="mips-submenu" id="mipsMenu" style="display: block;">
     <h3>16-BIT MIPS Design</h3>
     <a href="register_file.html">Register File</a>
     <a href="alu.html">ALU Design</a>
@@ -80,9 +80,8 @@
 
   <script>
     function toggleMipsMenu() {
-      const menu = document.getElementById('mipsMenu');
-      menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
-    }
+  // Always visible, toggle disabled
+}
   </script>
 </body>
 </html>
