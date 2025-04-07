@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register File</title>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin: 10px 0;
+    }
+    h3, h4 {
+      color: #58a6ff;
+    }
+  </style>
+</head>
+<body>
+  <h3>Register File</h3>
+  <p>
+    A register file is a small, fast memory unit within a CPU that stores temporary data needed during instruction execution.
+    Unlike RAM, the register file offers quick access to values used in arithmetic, logic, and data movement operations.
+  </p>
+  <p>
+    Each register is built with flip-flops and stores a fixed-width word (e.g., 8 bits). Flip-flops are synchronized with a clock and controlled by enable and reset lines.
+  </p>
+
+  <h4>1. Basic 4-to-1 MUX Logic Cell</h4>
+  <img src="images/mux4.png" alt="4-to-1 MUX Logic">
+  <p>This logic unit selects one of four inputs based on control signals.</p>
+
+  <h4>2. MUX 16x4 Grid</h4>
+  <img src="images/MUX16.png" alt="MUX Grid">
+  <p>This expands the MUX logic to 16 registers for scalable readout.</p>
+
+  <h4>3. Resource Properties</h4>
+  <img src="images/resource prop.png" alt="Resource Properties">
+  <p>Indicates how FPGA logic and routing resources are used.</p>
+
+  <h4>4. Register Cell Structure</h4>
+  <img src="images/RG8.png" alt="8-bit Register Block">
+  <p>Each register stores 8 bits using D flip-flops, controlled by clock, reset, and write-enable lines.</p>
+
+  <h4>5. Full Register File Integration</h4>
+  <img src="images/RLTVIEWER-REGFILE.png" alt="Register File Full">
+  <p>Top-level schematic including decoder, registers, and dual-read MUXes.</p>
+
+  <h4>6. Register File Simulation</h4>
+  <img src="images/WAVEFORM.png" alt="Register File Waveform">
+  <p>Simulation showing correct timing and value transfer in the file.</p>
+
+  <p style="margin-top: 40px; font-style: italic;">Project for UAF EE 443 LAB with "Dr. Raskovic".</p>
+</body>
+</html>
