@@ -32,21 +32,57 @@
       border-radius: 5px;
       background-color: #333;
       text-align: center;
+      cursor: pointer;
     }
     .sidebar a:hover {
       background-color: #444;
+    }
+    .mips-submenu {
+      background-color: #111;
+      padding: 10px;
+      border-left: 1px solid white;
+      min-height: 100vh;
+      display: none;
+    }
+    .mips-submenu h3 {
+      text-align: center;
+      color: #58a6ff;
+      margin-top: 0;
+    }
+    .mips-submenu a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      padding: 10px;
+      margin: 5px 0;
+      background-color: #222;
+      border-radius: 5px;
+      text-align: center;
+    }
+    .mips-submenu a:hover {
+      background-color: #333;
     }
   </style>
 </head>
 <body>
   <div class="sidebar">
     <h2>Portfolio</h2>
+    <a href="maze.html">Maze Stack Game</a>
+    <a href="amplifier.html">Three Stage Amplifier</a>
+    <a onclick="toggleMipsMenu()">16-BIT MIPS Design</a>
+  </div>
+
+  <div class="mips-submenu" id="mipsMenu">
+    <h3>16-BIT MIPS Design</h3>
     <a href="register_file.html">Register File</a>
     <a href="alu.html">ALU Design</a>
   </div>
-  <div style="padding: 20px;">
-    <h1>Welcome to My Engineering Portfolio</h1>
-    <p>Select a project from the sidebar to view more details.</p>
-  </div>
+
+  <script>
+    function toggleMipsMenu() {
+      const menu = document.getElementById('mipsMenu');
+      menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+    }
+  </script>
 </body>
 </html>
