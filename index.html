@@ -39,10 +39,11 @@
     }
     .mips-submenu {
       background-color: #111;
-      padding: 10px;
+      padding: 20px;
       border-left: 1px solid white;
       min-height: 100vh;
       display: none;
+      width: 300px;
     }
     .mips-submenu h3 {
       text-align: center;
@@ -54,13 +55,19 @@
       color: white;
       text-decoration: none;
       padding: 10px;
-      margin: 5px 0;
+      margin: 8px 0;
       background-color: #222;
       border-radius: 5px;
       text-align: center;
     }
     .mips-submenu a:hover {
       background-color: #333;
+    }
+    .mips-description {
+      font-size: 14px;
+      color: #ccc;
+      padding: 10px;
+      margin-top: 10px;
     }
   </style>
 </head>
@@ -72,17 +79,20 @@
     <a onclick="toggleMipsMenu()">16-BIT MIPS Design</a>
   </div>
 
-  <div class=\"mips-submenu\" id=\"mipsMenu\" style=\"display: none;\">
+  <div class="mips-submenu" id="mipsMenu" style="display: none;">
     <h3>16-BIT MIPS Design</h3>
     <a href="register_file.html">Register File</a>
     <a href="alu.html">ALU Design</a>
+    <div class="mips-description">
+      This 16-bit MIPS processor is a simplified architecture designed to demonstrate core CPU operations such as register access, arithmetic processing, and instruction execution. Each component works together to simulate real-world instruction flow in a modular, scalable way.
+    </div>
   </div>
 
   <script>
     function toggleMipsMenu() {
-  const menu = document.getElementById('mipsMenu');
-  menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
-}
+      const menu = document.getElementById('mipsMenu');
+      menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    }
   </script>
 </body>
 </html>
