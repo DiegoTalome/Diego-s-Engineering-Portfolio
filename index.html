@@ -2,96 +2,420 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Engineering Portfolio</title>
+  <title>Diego Talome | Engineering Portfolio</title>
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: black;
-      color: white;
-      display: flex;
+    :root {
+      /* Color Palette: Dark, Soft Blues and Purples */
+      --bg-color: #0d0e15; /* Very dark navy/black */
+      --sidebar-bg: #151623; /* Dark muted purple/navy for sidebar */
+      --text-main: #e2e8f0; /* Soft white/gray for text */
+      --text-muted: #94a3b8; /* Muted text */
+      --accent-color: #8b5cf6; /* Soft purple */
+      --accent-hover: #a78bfa; /* Lighter soft purple */
+      --accent-active: #6d28d9; /* Deep active purple */
+      --border-color: #2e1065; /* Deep purple border */
+      --card-bg: #1e1b4b; /* Dark purple/indigo card background */
+      --link-color: #60a5fa; /* Soft bright blue for links */
+      --link-hover: #bfdbfe;
     }
-    .sidebar {
-      width: 200px;
-      background-color: black;
-      height: 100vh;
-      padding: 20px;
+
+    * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
-    .sidebar h2 {
-      color: white;
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    .sidebar a {
-      display: block;
-      color: white;
-      text-decoration: none;
-      padding: 10px;
-      margin: 5px 0;
-      border-radius: 5px;
-      background-color: #333;
-      text-align: center;
-      cursor: pointer;
-    }
-    .sidebar a:hover {
-      background-color: #444;
-    }
-    .mips-submenu {
-      background-color: #111;
-      padding: 20px;
-      border-left: 1px solid white;
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      display: flex;
       min-height: 100vh;
-      display: none;
-      width: 300px;
+      line-height: 1.6;
     }
-    .mips-submenu h3 {
+
+    /* Sidebar Styles */
+    .sidebar {
+      width: 260px;
+      background-color: var(--sidebar-bg);
+      padding: 30px 20px;
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid var(--border-color);
+      box-shadow: 2px 0 15px rgba(0, 0, 0, 0.5);
+      z-index: 10;
+    }
+
+    .sidebar h2 {
+      color: var(--text-main);
       text-align: center;
-      color: #58a6ff;
-      margin-top: 0;
+      margin-bottom: 40px;
+      font-size: 1.5rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-weight: 600;
+      border-bottom: 2px solid var(--accent-color);
+      padding-bottom: 10px;
     }
-    .mips-submenu a {
+
+    .nav-btn {
       display: block;
-      color: white;
-      text-decoration: none;
-      padding: 10px;
+      width: 100%;
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid transparent;
+      padding: 12px 15px;
       margin: 8px 0;
-      background-color: #222;
-      border-radius: 5px;
+      border-radius: 8px;
+      text-align: left;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: inherit;
+    }
+
+    .nav-btn:hover {
+      background-color: rgba(139, 92, 246, 0.1);
+      color: var(--text-main);
+      border-color: rgba(139, 92, 246, 0.3);
+      transform: translateX(5px);
+    }
+
+    .nav-btn.active {
+      background-color: var(--accent-color);
+      color: white;
+      box-shadow: 0 4px 10px rgba(109, 40, 217, 0.4);
+      border-color: var(--accent-active);
+    }
+
+    /* Main Content Area */
+    .main-content {
+      flex: 1;
+      padding: 40px 60px;
+      max-width: 1200px;
+      margin: 0 auto;
+      overflow-y: auto;
+    }
+
+    /* Tab Content Wrappers */
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.5s ease forwards;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* General Typography & Elements */
+    h1, h2, h3, h4 {
+      color: var(--accent-hover);
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    p {
+      margin-bottom: 20px;
+      font-size: 1.05rem;
+      color: var(--text-muted);
+    }
+
+    a {
+      color: var(--link-color);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    a:hover {
+      color: var(--link-hover);
+      text-decoration: underline;
+    }
+
+    .download-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(96, 165, 250, 0.1);
+      color: var(--link-color);
+      border: 1px solid var(--link-color);
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      margin-top: 15px;
+      transition: all 0.3s ease;
+    }
+
+    .download-link:hover {
+      background-color: var(--link-color);
+      color: #000;
+      text-decoration: none;
+      box-shadow: 0 0 15px rgba(96, 165, 250, 0.4);
+    }
+
+    /* Sub-tabs specific for MIPS */
+    .sub-tabs-container {
+      margin-bottom: 30px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      gap: 15px;
+      padding-bottom: 10px;
+    }
+
+    .sub-tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 8px 16px;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+    }
+
+    .sub-tab-btn:hover {
+      color: var(--accent-hover);
+      background-color: rgba(139, 92, 246, 0.05);
+    }
+
+    .sub-tab-btn.active {
+      color: var(--text-main);
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .sub-tab-content {
+      display: none;
+      animation: fadeIn 0.4s ease forwards;
+    }
+
+    .sub-tab-content.active {
+      display: block;
+    }
+
+    /* Images */
+    .image-container {
+      background-color: var(--card-bg);
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 30px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease;
+    }
+
+    .image-container:hover {
+      transform: translateY(-2px);
+    }
+
+    .image-container img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 6px;
+      display: block;
+      margin: 0 auto 15px auto;
+    }
+
+    .image-caption {
       text-align: center;
-    }
-    .mips-submenu a:hover {
-      background-color: #333;
-    }
-    .mips-description {
-      font-size: 14px;
-      color: #ccc;
-      padding: 10px;
-      margin-top: 10px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 0;
     }
   </style>
 </head>
 <body>
-  <div class="sidebar" style="display: block;">
+
+  <!-- Navigation Sidebar -->
+  <aside class="sidebar">
     <h2>Portfolio</h2>
-    <a href="general.html">General</a>
-    <a href="maze.html">Maze Stack Game</a>
-    <a onclick="toggleMipsMenu()">16-BIT MIPS Design</a>
-  </div>
+    <nav>
+      <button class="nav-btn active" onclick="openMainTab(event, 'tab-general')">General</button>
+      <button class="nav-btn" onclick="openMainTab(event, 'tab-maze')">Maze Stack Game</button>
+      <button class="nav-btn" onclick="openMainTab(event, 'tab-mips')">16-BIT MIPS Design</button>
+    </nav>
+  </aside>
 
-  <div class="mips-submenu" id="mipsMenu" style="display: none;">
-    <h3>16-BIT MIPS Design</h3>
-    <a href="register_file.html">Register File</a>
-    <a href="alu.html">ALU Design</a>
-    <div class="mips-description">
-      This 16-bit MIPS processor is a simplified architecture designed to demonstrate core CPU operations such as register access, arithmetic processing, and instruction execution. Each component works together to simulate real-world instruction flow in a modular, scalable way.
-    </div>
-  </div>
+  <!-- Main Content Area -->
+  <main class="main-content">
+    
+    <!-- GENERAL TAB -->
+    <section id="tab-general" class="tab-content active">
+      <h2>Welcome to My Engineering Portfolio</h2>
+      <p>
+        My name is <strong>Diego Talome</strong>, and I’m currently pursuing my degree in Computer Engineering at the University of Alaska Fairbanks.
+        This portfolio showcases a selection of my projects, ranging from digital logic design and embedded systems to analog circuit development and software engineering.
+      </p>
+      <p>
+        This website is structured to present not only the functionality of each project, but also to explain the design process behind them, the challenges I encountered,
+        and the skills I applied and developed along the way. Each section is crafted to be accessible to both engineers and curious viewers interested in the behind-the-scenes of how systems work.
+      </p>
+      <p>
+        The projects you’ll find here include a maze-based game written in C++ using a stack navigation system, a three-stage analog amplifier designed from scratch,
+        and a modular 16-bit MIPS processor constructed using VHDL, featuring components like a register file and arithmetic logic unit (ALU).
+      </p>
+      <p>
+        I built this portfolio as a professional presentation tool to help communicate my work during job and internship applications.
+        It’s also a personal reflection space—an organized timeline of my progress and a foundation for everything I’ll continue to build.
+      </p>
+    </section>
 
+    <!-- MAZE GAME TAB -->
+    <section id="tab-maze" class="tab-content">
+      <h2>Maze Stack Game</h2>
+      <p>
+        This project was created as a final for CS 301 and centers around a stack-based game implemented entirely in C++.
+        The player explores a maze composed of multiple rooms, using vertical navigation through stacks and horizontal transitions through doorways.
+      </p>
+      <p>
+        The game runs in a text-based console. You can move up or down using keys 'w' and 's', enter doors using 'x', grab a treasure with 'z', and quit the game with 'q'.
+        The stack structure provides a great way to simulate depth, such as tiles inside a room being accessed one layer at a time.
+      </p>
+      <p>
+        The logic behind the maze is structured using the Standard Template Library (STL) stack. This allows the tiles to be pushed or popped efficiently,
+        giving us natural room traversal and reset behaviors. Each room is essentially a vertical column, and your pointer navigates up or down it like a memory stack.
+      </p>
+      <p>
+        We also use vectors to temporarily reverse the stack for display purposes, and simple pointer arithmetic to track the current tile the player is on.
+        Rather than actual memory addresses, we use indices as abstracted pointers to simplify logic and avoid direct memory manipulation.
+      </p>
+      <p>
+        The project demonstrates a solid understanding of stack operations, pointer simulation, modular logic with functions,
+        and interactive loop structures — all important foundations in computer engineering and systems programming.
+      </p>
+      <a class="download-link" href="https://github.com/DiegoTalome/Diego-s-Engineering-Portfolio/raw/main/MazeGame/MazeGame.rar" download>
+        📁 View/Download MazeGame Folder
+      </a>
+      <p style="margin-top: 40px; font-style: italic; font-size: 0.9rem;">Project for CS 301</p>
+    </section>
+
+    <!-- MIPS DESIGN TAB (Contains Sub-Tabs) -->
+    <section id="tab-mips" class="tab-content">
+      <h2>16-BIT MIPS Design</h2>
+      
+      <!-- Sub Tab Navigation -->
+      <div class="sub-tabs-container">
+        <button class="sub-tab-btn active" onclick="openSubTab(event, 'sub-mips-overview')">Overview</button>
+        <button class="sub-tab-btn" onclick="openSubTab(event, 'sub-mips-alu')">ALU Design</button>
+        <button class="sub-tab-btn" onclick="openSubTab(event, 'sub-mips-reg')">Register File</button>
+      </div>
+
+      <!-- MIPS Sub Tab: Overview -->
+      <div id="sub-mips-overview" class="sub-tab-content active">
+        <p>
+          This 16-bit MIPS processor is a simplified architecture designed to demonstrate core CPU operations such as register access, arithmetic processing, and instruction execution. 
+          Each component works together to simulate real-world instruction flow in a modular, scalable way.
+        </p>
+        <p>
+          Select the tabs above to dive deeper into the specific architectural blocks, including the Arithmetic Logic Unit (ALU) and the Register File.
+        </p>
+      </div>
+
+      <!-- MIPS Sub Tab: ALU -->
+      <div id="sub-mips-alu" class="sub-tab-content">
+        <h3>Arithmetic Logic Unit (ALU)</h3>
+        <p>
+          An Arithmetic Logic Unit (ALU) is a core component of the CPU responsible for executing operations like addition, subtraction,
+          bitwise AND/OR/XOR, and comparisons. It uses input from the register file and returns results back into memory or registers.
+        </p>
+        <p>
+          This ALU design project is currently under development. Diagrams, waveform simulations, and implementation details will be added soon.
+        </p>
+        <p style="margin-top: 40px; font-style: italic; font-size: 0.9rem;">Project for UAF EE 443 LAB with Dr. Raskovic.</p>
+      </div>
+
+      <!-- MIPS Sub Tab: Register File -->
+      <div id="sub-mips-reg" class="sub-tab-content">
+        <h3>Register File</h3>
+        <p>
+          A register file is a small, fast memory unit within a CPU that shifts temporary data needed during instruction execution.
+          Unlike RAM, the register file offers quick access to values used in arithmetic, logic, and data movement operations.
+        </p>
+        <p>
+          Each register is built with flip-flops and stores a fixed-width word (e.g., 8 bits). Flip-flops are synchronized with a clock and controlled by enable and reset lines.
+        </p>
+
+        <div class="image-container">
+          <h4>1. Basic 4-to-1 MUX Logic Cell</h4>
+          <img src="images/mux4.png" alt="4-to-1 MUX Logic">
+          <p class="image-caption">This logic unit selects one of four inputs based on control signals.</p>
+        </div>
+
+        <div class="image-container">
+          <h4>2. MUX 16x4 Grid</h4>
+          <img src="images/MUX16.png" alt="MUX Grid">
+          <p class="image-caption">This expands the MUX logic to 16 registers for scalable readout.</p>
+        </div>
+
+        <div class="image-container">
+          <h4>3. Resource Properties</h4>
+          <img src="images/resource prop.png" alt="Resource Properties">
+          <p class="image-caption">Indicates how FPGA logic and routing resources are used.</p>
+        </div>
+
+        <div class="image-container">
+          <h4>4. Register Cell Structure</h4>
+          <img src="images/RG8.png" alt="8-bit Register Block">
+          <p class="image-caption">Each register stores 8 bits using D flip-flops, controlled by clock, reset, and write-enable lines.</p>
+        </div>
+
+        <div class="image-container">
+          <h4>5. Full Register File Integration</h4>
+          <img src="images/RLTVIEWER-REGFILE.png" alt="Register File Full">
+          <p class="image-caption">Top-level schematic including decoder, registers, and dual-read MUXes.</p>
+        </div>
+
+        <div class="image-container">
+          <h4>6. Register File Simulation</h4>
+          <img src="images/WAVEFORM.png" alt="Register File Waveform">
+          <p class="image-caption">Simulation showing correct timing and value transfer in the file.</p>
+        </div>
+
+        <p style="margin-top: 40px; font-style: italic; font-size: 0.9rem;">Project for UAF EE 443 LAB with Dr. Raskovic.</p>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- JavaScript for Tabs -->
   <script>
-    function toggleMipsMenu() {
-      const menu = document.getElementById('mipsMenu');
-      menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    function openMainTab(event, tabId) {
+      // Hide all main tab content
+      const contents = document.querySelectorAll('.tab-content');
+      contents.forEach(content => content.classList.remove('active'));
+
+      // Remove active class from all main nav buttons
+      const navBtns = document.querySelectorAll('.sidebar .nav-btn');
+      navBtns.forEach(btn => btn.classList.remove('active'));
+
+      // Show the targeted tab
+      document.getElementById(tabId).classList.add('active');
+      
+      // Add active state to the clicked button
+      event.currentTarget.classList.add('active');
+    }
+
+    function openSubTab(event, subTabId) {
+      // Hide all sub tab content within the parent section
+      const section = event.currentTarget.closest('.tab-content');
+      const subContents = section.querySelectorAll('.sub-tab-content');
+      subContents.forEach(content => content.classList.remove('active'));
+
+      // Remove active class from all sub-tab buttons
+      const subBtns = section.querySelectorAll('.sub-tab-btn');
+      subBtns.forEach(btn => btn.classList.remove('active'));
+
+      // Show the targeted sub-tab
+      document.getElementById(subTabId).classList.add('active');
+      
+      // Add active state to the clicked sub-tab button
+      event.currentTarget.classList.add('active');
     }
   </script>
 </body>
